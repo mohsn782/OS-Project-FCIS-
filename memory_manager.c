@@ -535,23 +535,31 @@ int get_page_table(uint32 *ptr_page_directory, const void *virtual_address, uint
 		return TABLE_NOT_EXIST;
 	}
 }
-
+///////////////////////////////////////NEW///////////////////////////////////////
 void * create_page_table(uint32 *ptr_page_directory, const uint32 virtual_address)
 {
 	//TODO: [PROJECT 2017 - [2] Kernel Dynamic Allocation] create_page_table()
 	// Write your code here, remove the panic and write your code
-	panic("create_page_table() is not implemented yet...!!");
+	//panic("create_page_table() is not implemented yet...!!");
 
 	//Use kmalloc() to create a new page TABLE for the given virtual address,
 	//link it to the given directory and return the address of the created table
 	//REMEMBER TO:
 	//	a.	clear all entries (as it may contain garbage data)
 	//	b.	clear the TLB cache (using "tlbflush()")
-
+	uint32 *ptr_page_table, ptr_phys, *ptr;
+	ptr_page_table = kmalloc(PAGE_SIZE);
+	ptr = ptr_page_table;
+	ptr_phys = kheap_physical_address((uint32)ptr_page_table);
+	ptr_page_directory[PDX(virtual_address)] = ( ptr_phys | PERM_PRESENT | PERM_USER | PERM_WRITEABLE );
+	for(int i=0;i<1024;i++,*ptr++)
+		*ptr=0;
+	tlbflush();
+	return (void*)ptr_page_table;
 	//change this "return" according to your answer
-	return 0;
-}
 
+}
+///////////////////////////////////////NEW///////////////////////////////////////
 void __static_cpt(uint32 *ptr_page_directory, const uint32 virtual_address, uint32 **ptr_page_table)
 {
 	panic("this function is not required...!!");
