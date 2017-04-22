@@ -234,32 +234,28 @@ void free_environment(struct Env* e)
 	LIST_INSERT_HEAD(&env_free_list, e);
 }
 
-
+///////////////////////////////////////NEW///////////////////////////////////////
 void * create_user_page_WS(unsigned int numOfElements)
 {
 	//TODO: [PROJECT 2017 - [2] Kernel Dynamic Allocation] create_user_page_WS()
 	// Write your code here, remove the panic and write your code
-	panic("create_user_page_WS() is not implemented yet...!!");
-
+	//panic("create_user_page_WS() is not implemented yet...!!");
 	//Use kmalloc() to allocate a new space for a working set with numOfElements elements
-
+	return kmalloc(ROUNDUP(numOfElements*sizeof(struct WorkingSetElement), PAGE_SIZE));
 	//change this "return" according to your answer
-	return 0;
+	//return 0;
 }
-
-
+///////////////////////////////////////NEW///////////////////////////////////////
+///////////////////////////////////////NEW///////////////////////////////////////
 void * create_user_directory()
 {
 	//TODO: [PROJECT 2017 - [2] Kernel Dynamic Allocation] create_user_directory()
 	// Write your code here, remove the panic and write your code
-	panic("create_user_directory() is not implemented yet...!!");
-
+	//panic("create_user_directory() is not implemented yet...!!");
 	//Use kmalloc() to allocate a new directory
-
-	//change this "return" according to your answer
-	return 0;
+	return (void*)kmalloc(PAGE_SIZE);
 }
-
+///////////////////////////////////////NEW///////////////////////////////////////
 //
 // Initialize the kernel virtual memory layout for environment e.
 // Given a pointer to an allocated page directory, set the e->env_pgdir and e->env_cr3 accordingly,
